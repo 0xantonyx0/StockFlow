@@ -22,11 +22,12 @@ namespace StockFlow
         public Entregas()
         {
             InitializeComponent();
-            EntregasCls entregasCls = new EntregasCls();
+            List<EntregasCls> dados = EntregasCls.CarregarDados("Dados.ods");
 
-            TextRange rctb = new TextRange(rtbdados.Document.ContentStart, rtbdados.Document.ContentEnd);
+            // Atribui ao DataGrid
+            dtgdados.ItemsSource = dados;
 
-            rctb.Text = entregasCls.CarregarDados();
+
         }
     }
 }
