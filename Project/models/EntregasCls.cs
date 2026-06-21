@@ -1,40 +1,68 @@
 ﻿using Aspose.Cells;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Windows;
 
 namespace StockFlow.Models
 {
-    class EntregasCls
+    public class EntregasCls
     {
-        public int NumeroChamado { get; set; }
-        public DateTime DataEntrega { get; set; }
-        public string? NomeCliente { get; set; }
-        public string? Equipamento { get; set; }
-        public string? Cidade { get; set; }
-        public string? Vendedor { get; set; }
-        public string? Observacoes { get; set; }
+        public string? SKU { get; set; }
+        public string? Nome { get; set; }
+        public string? Categoria { get; set; }
+        public int? Quantidade { get; set; }
+        public double Preco { get; set; }
+        public string? Status { get; set; }
 
-
-        public string CarregarDados()
+        public static List<EntregasCls> CarregarDados(string path)
         {
-            Workbook workbook = new Workbook("Dados.ods");
-            var wks = workbook.Worksheets[0];
+            var lista = new List<EntregasCls>();
 
-            int maxRow = wks.Cells.MaxDataRow;
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 1; i <= maxRow; i++)
+            try
             {
-                var cellValue = wks.Cells[i, 0].Value;
-                sb.AppendLine(cellValue?.ToString());
+                Workbook workbook = new Workbook(path);
+                Worksheet worksheet = workbook.Worksheets[0];
+                Cells cells = worksheet.Cells;
+
+                int maxLinha = cells.MaxDataRow;
+
+                for (int i = 1; i <= maxLinha; i++)
+                {
+                    var c0 = cells[i, 0];
+                    var c1 = cells[i, 1];
+                    var c2 = cells[i, 2];
+                    var c3 = cells[i, 3];
+                    var c4 = cells[i, 4];
+                    var c5 = cells[i, 5];
+                    var c6 = cells[i, 6];
+
+                    int valorConvertido = Convert.ToInt32(c3.Value);
+                    double precoConvertido = Convert.ToDouble(c5.Value);
+
+                    var item = new EntregasCls
+                    {
+                        SKU = c0.Value?.ToString(),
+                        Nome = c1?.Value?.ToString() ?? "Não Foi entregue",
+                        Categoria = c2.Value?.ToString(),
+                        Quantidade = valorConvertido,
+                        Preco = precoConvertido,
+                        Status = "Em Estoque"
+                    };
+
+                    lista.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                string title = "ERRO";
+                MessageBoxButton buttons = MessageBoxButton.OK;
+                MessageBoxImage icon = MessageBoxImage.Error;
+
+                MessageBoxResult result = MessageBox.Show(message, title, buttons, icon);
             }
 
-            return sb.ToString();
-
-
+            return lista;
         }
-
-
     }
 }
