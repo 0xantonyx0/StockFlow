@@ -29,7 +29,7 @@ Atualmente, o projeto possui uma estrutura simplificada: classes de dados em `Mo
 
 - [x] **Estrutura do Projeto**: Configuração inicial da solução.
 - [x] **Modelos de Dados**: Classes em `Models` definindo a estrutura do estoque (ex: `Produto`).
-- [x] **Navegação**: Sistema de páginas e transições implementado.
+- [ ] **Navegação**: Sistema de páginas e transições implementado.
 - [x] **Carregamento de Dados**: Método funcional para ler arquivos `.ods` e popular objetos C#.
 - [ ] **Exibição na UI**: Integração dos dados carregados com `DataGrid` ou controles de listagem.
 - [ ] **Edição e Persistência**: Funcionalidades para alterar dados e salvar de volta no `.ods`.
